@@ -9,11 +9,6 @@ const Header = () => {
     <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white fixed w-full z-10 shadow-md">
       <nav className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <img
-            src="/logo.svg"
-            alt="Logo"
-            className="h-8 w-8 mr-2"
-          />
           <span className="text-xl font-bold tracking-wide">Audio Interview</span>
         </Link>
 
