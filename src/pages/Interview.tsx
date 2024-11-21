@@ -110,7 +110,7 @@ const Interview = () => {
                   sua resposta.
                 </li>
                 <li>
-                  Clique em <strong>"Parar Gravação"</strong> quando terminar e assim seu audio sera gravado
+                  Clique em <strong>"Parar e salvar Gravação"</strong> quando terminar assim seu audio sera pausado e gravado
                 </li>
                 <li>
                   Repita o processo para todas as perguntas exibidas.
