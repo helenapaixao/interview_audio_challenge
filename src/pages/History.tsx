@@ -202,7 +202,7 @@ const History = () => {
     <audio
       src={recording.audioUrl}
       controls
-      className="w-full max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
+      className=" max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
     >
       Seu navegador não suporta o elemento de áudio.
     </audio>
