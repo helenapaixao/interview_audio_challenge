@@ -85,11 +85,12 @@ const AudioRecorder = ({
         <button
           onClick={handleStopRecording}
           className="relative px-6 py-3 font-semibold text-white bg-gray-200 hover:bg-gray-300 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 flex items-center justify-center"
+           type="button"
         >
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <span className="absolute inset-0 h-4 w-4 bg-red-500 rounded-full animate-ping"></span>
-              <span className="relative h-4 w-4 bg-red-600 rounded-full"></span>
+              <span className="absolute inset-0 h-4 w-4 bg-red-500 rounded-full animate-ping" />
+              <span className="relative h-4 w-4 bg-red-600 rounded-full"/>
             </div>
             <span className="text-gray-800">Parar Gravação</span>
           </div>
