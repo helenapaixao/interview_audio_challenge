@@ -4,14 +4,14 @@ import Header from "../components/Header";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { FaTrashAlt, FaFilter, FaChevronDown, FaHistory } from "react-icons/fa";
-
+import { FaRegSun } from "react-icons/fa6";
 interface Recording {
   question: string;
   audioUrl: string | null;
-  timestamp: string; 
+  timestamp: string;
 }
 
-const PAGE_SIZE = 5; 
+const PAGE_SIZE = 5;
 
 const History = () => {
   const [recordings, setRecordings] = useState<Recording[]>([]);
@@ -23,7 +23,10 @@ const History = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const storedRecordings = JSON.parse(localStorage.getItem("recordings") || "[]");
+    const storedRecordings = JSON.parse(
+      localStorage.getItem("recordings") || "[]"
+    );
+    console.log("Stored Recordings:", storedRecordings);
     setRecordings(storedRecordings);
     setFilteredRecordings(storedRecordings);
   }, []);
@@ -90,7 +93,8 @@ const History = () => {
             Histórico de Gravações
           </h1>
           <p className="text-lg text-gray-600">
-            Aqui estão as respostas que você já gravou. Você pode reproduzi-las ou verificar as informações relacionadas.
+            Aqui estão as respostas que você já gravou. Você pode reproduzi-las
+            ou verificar as informações relacionadas.
           </p>
         </div>
 
@@ -99,7 +103,7 @@ const History = () => {
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md flex items-center hover:bg-blue-600 transition"
           >
-            <FaFilter className="mr-2" />
+            <FaRegSun className="mr-2" />
             Configurações
             <FaChevronDown className="ml-2" />
           </button>
@@ -107,7 +111,9 @@ const History = () => {
             <div className="absolute bg-white shadow-lg rounded-md mt-2 w-full max-w-md z-10">
               <div className="p-4 space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-700">Filtros</h3>
+                  <h3 className="text-lg font-semibold text-gray-700">
+                    Filtros
+                  </h3>
                   <input
                     type="text"
                     placeholder="Buscar por pergunta"
@@ -138,7 +144,9 @@ const History = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-red-500">Deletar por Data</h3>
+                  <h3 className="text-lg font-semibold text-red-500">
+                    Deletar por Data
+                  </h3>
                   <input
                     type="date"
                     value={deleteDate}
@@ -158,19 +166,24 @@ const History = () => {
           )}
         </div>
 
-        <main className="mt-8">
+        <main className="mt-8 flex items-center justify-center h-96">
           {paginatedRecordings.length === 0 ? (
-            <p className="text-center text-gray-600 mt-4">
-              Nenhuma gravação encontrada. Ajuste os filtros ou responda novas perguntas.
+            <p className="text-center text-gray-600">
+              Nenhuma gravação encontrada. Ajuste os filtros ou responda novas
+              perguntas.
             </p>
           ) : (
             <div className="overflow-x-auto shadow-lg rounded-lg border border-gray-200">
               <table className="w-full table-auto">
                 <thead className="bg-blue-600 text-white">
                   <tr>
-                    <th className="px-6 py-4 text-left font-semibold">Pergunta</th>
+                    <th className="px-6 py-4 text-left font-semibold">
+                      Pergunta
+                    </th>
                     <th className="px-6 py-4 text-left font-semibold">Áudio</th>
-                    <th className="px-6 py-4 text-left font-semibold">Data e Horário</th>
+                    <th className="px-6 py-4 text-left font-semibold">
+                      Data e Horário
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -181,27 +194,36 @@ const History = () => {
                         index % 2 === 0 ? "bg-gray-50" : "bg-white"
                       } hover:bg-gray-100 transition duration-200`}
                     >
-                      <td className="px-6 py-4 text-gray-800 font-medium">{recording.question}</td>
-                      <td className="px-6 py-4 flex items-center justify-center">
-                        {recording.audioUrl ? (
-                          <audio
-                            src={recording.audioUrl}
-                            controls
-                            className="w-full h-10 rounded-lg shadow-sm border"
-                          />
-                        ) : (
-                          <span className="text-red-500 font-semibold">Sem áudio gravado</span>
-                        )}
+            <td className="px-6 py-4 text-gray-800 font-medium break-words max-w-xs">
+  {recording.question}
+</td>
+<td className="px-6 py-4 flex justify-center items-center">
+  {recording.audioUrl ? (
+    <audio
+      src={recording.audioUrl}
+      controls
+      className="w-full max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
+    >
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+  ) : (
+    <span className="text-red-500 font-semibold">Sem áudio gravado</span>
+  )}
+</td>
+
+
+
+
+                      <td className="px-6 py-4 text-gray-600 text-sm">
+                        {recording.timestamp}
                       </td>
-                      <td className="px-6 py-4 text-gray-600 text-sm">{recording.timestamp}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           )}
-
-          <div className="flex justify-center items-center mt-6 space-x-4">
+            <div className="flex justify-center items-center mt-6 space-x-4">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <button
                 key={page}
@@ -217,11 +239,6 @@ const History = () => {
             ))}
           </div>
         </main>
-        <footer className="mt-12 text-center text-sm text-gray-500">
-          <p>
-            &copy; {new Date().getFullYear()} Sistema de Entrevistas. Todos os direitos reservados.
-          </p>
-        </footer>
       </div>
       <Toaster position="top-right" richColors />
     </>
