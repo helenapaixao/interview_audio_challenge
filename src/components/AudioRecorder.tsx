@@ -5,10 +5,10 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { Toaster, toast } from "sonner";
 
 interface AudioRecorderProps {
-  question: string; 
-  onStop: (audioUrl: string) => void; 
-  canRecord: boolean; 
-  isReRecording: boolean; 
+  question: string;
+  onStop: (audioUrl: string) => void;
+  canRecord: boolean;
+  isReRecording: boolean;
 }
 
 const AudioRecorder = ({
@@ -84,14 +84,14 @@ const AudioRecorder = ({
       {isRecording && (
         <button
           onClick={handleStopRecording}
-          className="relative px-6 py-3 font-semibold text-white bg-red-500 hover:bg-red-600 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 flex items-center justify-center"
+          className="relative px-6 py-3 font-semibold text-white bg-gray-200 hover:bg-gray-300 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 flex items-center justify-center"
         >
           <div className="flex items-center space-x-4">
             <div className="relative">
-              <span className="absolute inset-0 h-5 w-5 bg-red-500 rounded-full animate-ping"></span>
-              <span className="relative h-5 w-5 bg-red-600 rounded-full"></span>
+              <span className="absolute inset-0 h-4 w-4 bg-red-500 rounded-full animate-ping"></span>
+              <span className="relative h-4 w-4 bg-red-600 rounded-full"></span>
             </div>
-            <span>Parar Gravação</span>
+            <span className="text-gray-800">Parar Gravação</span>
           </div>
         </button>
       )}
