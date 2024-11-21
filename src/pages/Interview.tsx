@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
-import { FaMicrophone } from "react-icons/fa"; 
+import { FaMicrophone } from "react-icons/fa";
 
 const questions = [
   "Você já utilizou useEffect? Explique como ele funciona e cite um exemplo.",
@@ -99,12 +99,29 @@ const Interview = () => {
 
         {isStartModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
+            <div className="bg-white p-6 rounded-md shadow-lg max-w-md w-full">
               <h2 className="text-2xl font-bold text-blue-800 text-center">
-                Iniciar Entrevista
+                Bem-vindo(a) à Entrevista!
               </h2>
+              <ul className="text-gray-600 mt-4 list-disc list-inside space-y-2">
+                <li>Leia a pergunta exibida na tela.</li>
+                <li>
+                  Use o botão <strong>"Gravar"</strong> para começar a gravar
+                  sua resposta.
+                </li>
+                <li>
+                  Clique em <strong>"Parar Gravação"</strong> quando terminar e assim seu audio sera gravado
+                </li>
+                <li>
+                  Repita o processo para todas as perguntas exibidas.
+                </li>
+                <li>
+                  Um cronômetro será exibido para indicar o tempo disponível
+                  para cada resposta.
+                </li>
+              </ul>
               <p className="text-gray-600 text-center mt-4">
-                Deseja começar a entrevista? A primeira pergunta será exibida.
+                Pronto para começar?
               </p>
               <button
                 onClick={startInterview}
