@@ -33,7 +33,7 @@ const Countdown = ({
             return { shouldRepeat: false };
           }}
         >
-          {({ remainingTime }) => (
+          {({ remainingTime }: { remainingTime: number }) => (
             <div className="flex items-center space-x-2 text-2xl font-bold">
               <FaClock className="text-blue-500" />
               <span className="text-gray-300">{remainingTime}s</span> 
