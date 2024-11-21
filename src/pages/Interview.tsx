@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
+import { FaMicrophone } from "react-icons/fa"; 
 
 const questions = [
   "Você já utilizou useEffect? Explique como ele funciona e cite um exemplo.",
@@ -86,6 +87,16 @@ const Interview = () => {
     <>
       <Header />
       <div className="max-w-4xl mx-auto p-4">
+        <div className="text-center mt-12">
+          <h1 className="text-3xl font-extrabold text-blue-700 mb-4 flex items-center justify-center">
+            <FaMicrophone className="text-blue-500 mr-2" />
+            Entrevista
+          </h1>
+          <p className="text-lg text-gray-600">
+            Grave suas respostas para as perguntas a seguir.
+          </p>
+        </div>
+
         {isStartModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
@@ -97,6 +108,7 @@ const Interview = () => {
               </p>
               <button
                 onClick={startInterview}
+                type="button"
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mt-6 mx-auto block"
               >
                 Começar
