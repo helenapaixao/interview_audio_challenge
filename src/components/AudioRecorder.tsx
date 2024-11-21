@@ -6,9 +6,9 @@ import { Toaster, toast } from "sonner";
 
 interface AudioRecorderProps {
   question: string; 
-  onStop: (audioUrl: string) => void;
-  canRecord: boolean;
-  isReRecording: boolean;
+  onStop: (audioUrl: string) => void; 
+  canRecord: boolean; 
+  isReRecording: boolean; 
 }
 
 const AudioRecorder = ({
@@ -21,22 +21,22 @@ const AudioRecorder = ({
 
   const { startRecording, stopRecording } = useReactMediaRecorder({
     audio: true,
-    onStop: (blobUrl) => {
+    onStop: (blobUrl, blob) => {
       if (blobUrl) {
-        const recordings = JSON.parse(localStorage.getItem("recordings") || "[]");
+        const persistentUrl = URL.createObjectURL(blob);
 
+        const recordings = JSON.parse(localStorage.getItem("recordings") || "[]");
         const newRecording = {
           question,
-          audioUrl: blobUrl,
+          audioUrl: persistentUrl,
           timestamp: new Date().toLocaleString(),
         };
-
         localStorage.setItem(
           "recordings",
           JSON.stringify([...recordings, newRecording])
         );
 
-        onStop(blobUrl);
+        onStop(persistentUrl);
         setIsRecording(false);
         toast.success(isReRecording ? "Regravação salva!" : "Gravação salva!");
       } else {
@@ -47,7 +47,7 @@ const AudioRecorder = ({
 
   const handleStartRecording = () => {
     if (!canRecord) {
-      toast.error("O tempo acabou! Você não pode regravar.");
+      toast.error("O tempo acabou! Você não pode gravar.");
       return;
     }
     if (isRecording) {
@@ -76,6 +76,7 @@ const AudioRecorder = ({
             : "bg-gray-300 text-gray-500 cursor-not-allowed"
         } rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105`}
         disabled={!canRecord}
+        type="button"
       >
         {isReRecording ? "🔄 Regravar" : "🎙️ Gravar"}
       </button>
