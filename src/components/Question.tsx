@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
-import { FaMicrophone, FaStop, FaQuestionCircle, FaPlayCircle} from "react-icons/fa";
+import { FaMicrophone, FaQuestionCircle, FaPlayCircle} from "react-icons/fa";
 
 const questions = [
   "Fale sobre um projeto que você liderou.",
