@@ -5,21 +5,42 @@ import { useReactMediaRecorder } from "react-media-recorder";
 import { Toaster, toast } from "sonner";
 
 interface AudioRecorderProps {
+  question: string; 
   onStop: (audioUrl: string) => void;
-  canRecord: boolean; 
-  isReRecording: boolean; 
+  canRecord: boolean;
+  isReRecording: boolean;
 }
 
-const AudioRecorder = ({ onStop, canRecord, isReRecording }: AudioRecorderProps) => {
-  const [isRecording, setIsRecording] = useState(false); 
+const AudioRecorder = ({
+  question,
+  onStop,
+  canRecord,
+  isReRecording,
+}: AudioRecorderProps) => {
+  const [isRecording, setIsRecording] = useState(false);
 
   const { startRecording, stopRecording } = useReactMediaRecorder({
     audio: true,
     onStop: (blobUrl) => {
       if (blobUrl) {
+        const recordings = JSON.parse(localStorage.getItem("recordings") || "[]");
+
+        const newRecording = {
+          question,
+          audioUrl: blobUrl,
+          timestamp: new Date().toLocaleString(),
+        };
+
+        localStorage.setItem(
+          "recordings",
+          JSON.stringify([...recordings, newRecording])
+        );
+
         onStop(blobUrl);
-        setIsRecording(false); 
+        setIsRecording(false);
         toast.success(isReRecording ? "Regravação salva!" : "Gravação salva!");
+      } else {
+        toast.error("Erro ao salvar áudio. Tente novamente.");
       }
     },
   });
@@ -33,16 +54,16 @@ const AudioRecorder = ({ onStop, canRecord, isReRecording }: AudioRecorderProps)
       toast.error("A gravação já foi iniciada!");
       return;
     }
-    setIsRecording(true); 
+    setIsRecording(true);
     startRecording();
     toast(isReRecording ? "Regravação iniciada!" : "Gravação iniciada!", {
-      description: "Por favor, responda a pergunta com clareza.",
+      description: "Por favor, responda à pergunta com clareza.",
     });
   };
 
   const handleStopRecording = () => {
     stopRecording();
-    setIsRecording(false); 
+    setIsRecording(false);
   };
 
   return (
