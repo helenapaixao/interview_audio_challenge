@@ -92,7 +92,7 @@ const AudioRecorder = ({
               <span className="absolute inset-0 h-4 w-4 bg-red-500 rounded-full animate-ping" />
               <span className="relative h-4 w-4 bg-red-600 rounded-full"/>
             </div>
-            <span className="text-gray-800">Parar Gravação</span>
+            <span className="text-gray-800">Parar e Salvar a Gravação</span>
           </div>
         </button>
       )}
