@@ -1,23 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
-import { FaRedo, FaMicrophone, FaPlayCircle } from "react-icons/fa";
 
 const questions = [
   "Você já utilizou useEffect? Explique como ele funciona e cite um exemplo.",
   "Como o TypeScript ajuda no desenvolvimento de aplicações React?",
   "Explique como funciona o sistema de tipagem no TypeScript.",
-  "Qual a diferença entre interface e type em TypeScript?",
-  "Como você define tipos para componentes em React com TypeScript?",
-  "O que é memoization e como useMemo pode ser útil em React?",
-  "Explique o conceito de lifting state up no React.",
-  "Como funciona o Context API no React e para que ele é usado?",
-  "O que é React Router e como ele ajuda na criação de SPA?",
-  "Explique como gerenciar estados globais em uma aplicação React.",
 ];
 
 const Interview = () => {
@@ -25,7 +17,23 @@ const Interview = () => {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [isStartModalOpen, setIsStartModalOpen] = useState(true);
-  const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
+
+  useEffect(() => {
+    const storedRecordings = JSON.parse(
+      localStorage.getItem("recordings") || "[]"
+    );
+
+    const answeredQuestions = storedRecordings.map(
+      (recording: { question: string }) => recording.question
+    );
+    const firstUnansweredIndex = questions.findIndex(
+      (question) => !answeredQuestions.includes(question)
+    );
+
+    setCurrentQuestionIndex(
+      firstUnansweredIndex >= 0 ? firstUnansweredIndex : questions.length
+    );
+  }, []);
 
   const handleSaveRecording = (url: string) => {
     setAudioUrl(url);
@@ -34,43 +42,44 @@ const Interview = () => {
 
   const handleNextQuestion = () => {
     const currentQuestion = questions[currentQuestionIndex];
-    const currentTimestamp = new Date().toLocaleString();
-
-    const existingRecordings = JSON.parse(localStorage.getItem("recordings") || "[]");
+    const existingRecordings = JSON.parse(
+      localStorage.getItem("recordings") || "[]"
+    );
 
     const updatedRecordings = [
       ...existingRecordings,
       {
         question: currentQuestion,
         audioUrl: audioUrl || "Sem áudio gravado",
-        timestamp: currentTimestamp,
+        timestamp: new Date().toLocaleString(),
       },
     ];
 
     localStorage.setItem("recordings", JSON.stringify(updatedRecordings));
 
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      const nextQuestionIndex = questions.findIndex(
+        (q, idx) =>
+          idx > currentQuestionIndex &&
+          !updatedRecordings.some((recording) => recording.question === q)
+      );
+
+      setCurrentQuestionIndex(
+        nextQuestionIndex !== -1 ? nextQuestionIndex : questions.length
+      );
       setAudioUrl(null);
       setIsTimerActive(true);
       toast("Próxima pergunta!", {
         description: "Prepare-se para gravar sua resposta.",
       });
     } else {
-      setIsCompleteModalOpen(true);
+      toast.success("Você completou todas as perguntas!");
     }
   };
 
   const startInterview = () => {
     setIsStartModalOpen(false);
     setIsTimerActive(true);
-    setCurrentQuestionIndex(0); 
-  };
-
-  const restartInterview = () => {
-    setIsCompleteModalOpen(false);
-    startInterview();
-    toast.info("Entrevista reiniciada. Boa sorte!");
   };
 
   return (
@@ -81,93 +90,57 @@ const Interview = () => {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
               <h2 className="text-2xl font-bold text-blue-800 text-center">
-              <FaMicrophone className="mr-2 text-blue-600" /> 
                 Iniciar Entrevista
               </h2>
               <p className="text-gray-600 text-center mt-4">
-                Deseja começar a entrevista? O contador será iniciado e a primeira pergunta será exibida.
+                Deseja começar a entrevista? A primeira pergunta será exibida.
               </p>
-              <p className="text-gray-600 text-center mt-2">
-                Não se esqueça de clicar no botão <span className="font-bold text-blue-600">"Gravar"</span> para salvar sua resposta.
-              </p>
-              <div className="flex justify-between mt-6">
-                
-                <button
-                  onClick={startInterview}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
-                >
-                  <FaPlayCircle className="mr-2" />
-                  Começar
-                </button>
-              </div>
+              <button
+                onClick={startInterview}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mt-6 mx-auto block"
+              >
+                Começar
+              </button>
             </div>
           </div>
         )}
 
-        {isCompleteModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-md shadow-lg max-w-sm w-full">
-              <h2 className="text-2xl font-bold text-blue-800 text-center">
-                🎉 Parabéns!
-              </h2>
-              <p className="text-gray-600 text-center mt-4">
-                Você respondeu a todas as perguntas disponíveis. Deseja refazer a entrevista?
-              </p>
-              <div className="flex justify-between mt-6">
-                <button
-                  onClick={() => setIsCompleteModalOpen(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 flex items-center"
-                >
-                  Fechar
-                </button>
-                <button
-                  onClick={restartInterview}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
-                >
-                  <FaRedo className="mr-2" />
-                  Refazer
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="text-center mt-20">
-          <h1 className="text-3xl font-bold text-blue-800 mb-8">🎤 Entrevista</h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Responda às perguntas gravando suas respostas em áudio.
-          </p>
-        </div>
-
-        {!isStartModalOpen && !isCompleteModalOpen && (
+        {!isStartModalOpen && currentQuestionIndex < questions.length && (
           <div className="flex flex-col items-center">
             <h2 className="text-xl font-bold">Pergunta:</h2>
             <p className="text-lg mt-4">{questions[currentQuestionIndex]}</p>
 
-            <div className="mt-6">
-              <Countdown
-                key={currentQuestionIndex}
-                duration={30}
-                onComplete={() => {
-                  setIsTimerActive(false);
-                  toast.warning("Tempo esgotado! Salvando pergunta.");
-                  handleNextQuestion();
-                }}
-              />
-            </div>
+            <Countdown
+              key={currentQuestionIndex}
+              duration={30}
+              onComplete={() => {
+                setIsTimerActive(false);
+                toast.warning("Tempo esgotado! Salvando pergunta.");
+                handleNextQuestion();
+              }}
+            />
 
-            <div className="mt-6">
             <AudioRecorder
-  question={questions[currentQuestionIndex]} 
-  onStop={handleSaveRecording}
-  canRecord={isTimerActive}
-  isReRecording={!!audioUrl}
-/>
-            </div>
+              question={questions[currentQuestionIndex]}
+              onStop={handleSaveRecording}
+              canRecord={isTimerActive}
+              isReRecording={!!audioUrl}
+            />
+          </div>
+        )}
+
+        {currentQuestionIndex >= questions.length && (
+          <div className="text-center mt-20">
+            <h2 className="text-xl font-bold text-green-600">
+              🎉 Todas as perguntas foram respondidas!
+            </h2>
+            <p className="text-gray-600 mt-4">
+              Você pode revisar ou apagar as gravações no histórico para
+              responder novamente.
+            </p>
           </div>
         )}
       </div>
-
       <Toaster position="top-right" richColors />
     </>
   );
