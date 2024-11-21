@@ -194,25 +194,29 @@ const History = () => {
                         index % 2 === 0 ? "bg-gray-50" : "bg-white"
                       } hover:bg-gray-100 transition duration-200`}
                     >
-            <td className="px-6 py-4 text-gray-800 font-medium break-words max-w-xs">
-  {recording.question}
-</td>
-<td className="px-6 py-4 flex justify-center items-center">
-  {recording.audioUrl ? (
-    <audio
-      src={recording.audioUrl}
-      controls
-      className=" max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
-    >
-      Seu navegador não suporta o elemento de áudio.
-    </audio>
-  ) : (
-    <span className="text-red-500 font-semibold">Sem áudio gravado</span>
-  )}
-</td>
-
-
-
+                      <td className="px-6 py-4 text-gray-800 font-medium break-words max-w-xs">
+                        {recording.question}
+                      </td>
+                      <td className="px-6 py-4 flex justify-center items-center">
+                        {recording.audioUrl ? (
+                          <audio
+                            src={recording.audioUrl}
+                            controls
+                            className=" max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
+                          >
+                            <track
+                              kind="captions"
+                              srcLang="en"
+                              label="English"
+                            />
+                            Seu navegador não suporta o elemento de áudio.
+                          </audio>
+                        ) : (
+                          <span className="text-red-500 font-semibold">
+                            Sem áudio gravado
+                          </span>
+                        )}
+                      </td>
 
                       <td className="px-6 py-4 text-gray-600 text-sm">
                         {recording.timestamp}
@@ -223,7 +227,7 @@ const History = () => {
               </table>
             </div>
           )}
-            <div className="flex justify-center items-center mt-6 space-x-4">
+          <div className="flex justify-center items-center mt-6 space-x-4">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
               <button
                 key={page}
