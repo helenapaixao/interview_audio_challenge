@@ -82,8 +82,8 @@ O objetivo deste projeto é criar uma **página web para simular um ambiente de 
 
 1. **Clone o repositório**:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
-   cd <NOME_DO_PROJETO>
+   git clone <https://github.com/helenapaixao/interview_audio_challenge>
+   cd <interview_audio_challenge>
    ```
 
 2. **Instale as dependências**:
@@ -98,7 +98,7 @@ O objetivo deste projeto é criar uma **página web para simular um ambiente de 
 
 4. **Acesse o projeto no navegador**:
    ```
-   http://localhost:3000
+   http://localhost:5173/
    ```
 
 ---
