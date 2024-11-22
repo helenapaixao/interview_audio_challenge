@@ -6,12 +6,9 @@ import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
 import { FaMicrophone,FaQuestionCircle, FaPlayCircle} from "react-icons/fa";
+import questions from "../utils/questions.json"
 
-const questions = [
-  "Fale sobre um projeto que você liderou.",
-  "Como você lida com situações de pressão?",
-  "Qual foi sua maior conquista profissional?",
-];
+
 
 const Interview = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -79,6 +76,7 @@ const Interview = () => {
            <button
              onClick={startInterview}
              className="w-full max-w-[200px] px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center text-xl"
+             type="button"
            >
              <FaPlayCircle className="mr-2" />
              Começar
