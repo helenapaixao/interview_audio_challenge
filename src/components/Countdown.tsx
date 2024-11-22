@@ -11,10 +11,9 @@ interface CountdownProps {
   onComplete: () => void;
 }
 
+
 const Countdown = ({
   duration,
-  colors = ["#004777", "#F7B801", "#A30000", "#A30000"],
-  colorsTime = [10, 6, 3, 0],
   onComplete,
 }: CountdownProps) => {
   return (
@@ -23,8 +22,7 @@ const Countdown = ({
         <CountdownCircleTimer
           isPlaying
           duration={duration}
-          colors={colors}
-          colorsTime={colorsTime}
+           colors="#A30000"
           size={120} 
           strokeWidth={8} 
           onComplete={() => {

@@ -218,7 +218,7 @@ const History = () => {
                           </span>
                         ) : (
                           <audio
-                            src={recording.audioUrl}
+                            src={recording.audioUrl ?? undefined}
                             controls
                             className="max-w-lg sm:max-w-md md:max-w-lg lg:max-w-xl h-14 rounded-lg shadow-sm border"
                           >
