@@ -6,13 +6,5 @@
   "Explique a diferença entre props e state em React.",
   "O que são hooks no React e como eles melhoraram a biblioteca?",
   "Você já utilizou useEffect? Explique como ele funciona e cite um exemplo.",
-  "Como o TypeScript ajuda no desenvolvimento de aplicações React?",
-  "Explique como funciona o sistema de tipagem no TypeScript.",
-  "Qual a diferença entre interface e type em TypeScript?",
-  "Como você define tipos para componentes em React com TypeScript?",
-  "O que é memoization e como useMemo pode ser útil em React?",
-  "Explique o conceito de lifting state up no React.",
-  "Como funciona o Context API no React e para que ele é usado?",
-  "O que é React Router e como ele ajuda na criação de SPA?",
-  "Explique como gerenciar estados globais em uma aplicação React."
+  "Como o TypeScript ajuda no desenvolvimento de aplicações React?"
 ]
