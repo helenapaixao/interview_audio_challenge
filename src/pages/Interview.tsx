@@ -6,12 +6,7 @@ import Countdown from "../components/Countdown";
 import AudioRecorder from "../components/AudioRecorder";
 import { Toaster, toast } from "sonner";
 import { FaMicrophone } from "react-icons/fa";
-
-const questions = [
-  "Você já utilizou useEffect? Explique como ele funciona e cite um exemplo.",
-  "Como o TypeScript ajuda no desenvolvimento de aplicações React?",
-  "Explique como funciona o sistema de tipagem no TypeScript.",
-];
+import questions from "../utils/questions.json"
 
 const Interview = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
